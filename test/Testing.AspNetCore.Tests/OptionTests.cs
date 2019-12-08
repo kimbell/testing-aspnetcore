@@ -49,7 +49,7 @@ namespace Testing.AspNetCore.Tests
         {
             using var tc = new TestContext(_output)
             {
-                AdditionalConfiguration = configuration =>
+                AdditionalConfiguration = (context, configuration) =>
                 {
                     configuration.AddInMemoryCollection(new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                     {
@@ -75,7 +75,7 @@ namespace Testing.AspNetCore.Tests
         {
             using var tc = new TestContext(_output)
             {
-                AdditionalServices = services =>
+                AdditionalServices = (context, services) =>
                 {
                     services.PostConfigure<PetStoreOptions>(o => { o.Url = "http://petstore"; });
                 }

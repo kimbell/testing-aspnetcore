@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\src\appsettings.json" Link="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Test platform -->
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.4.0" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.4.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    <!-- Open API Packages-->
+    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.1.6" />    
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.1.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <!-- Mocking libraries-->
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
+    <!-- Testing framework-->
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Testing.AspNetCore\Testing.AspNetCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+    <Folder Include="External\" />
+  </ItemGroup>
+
+  <!-- Open API configuration-->
+  <ItemGroup>
+    <OpenApiReference Include="..\..\src\Testing.AspNetCore\wwwroot\swagger\v1\swagger.json" CodeGenerator="NSwagCSharp" OutputPath="ApiClient.cs" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OpenApiGenerateCodeOnBuild>true</OpenApiGenerateCodeOnBuild>
+    <OpenApiCodeDirectory>External</OpenApiCodeDirectory>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /parameterArrayType:"System.Collections.Generic.List"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /parameterDictionaryType:"System.Collections.Generic.Dictionary"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /responseArrayType:"System.Collections.Generic.List"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /responseDictionaryType:"System.Collections.Generic.Dictionary"</OpenApiGenerateCodeOptions>
+
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /arrayType:"System.Collections.Generic.List"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /arrayBaseType:"System.Collections.Generic.List"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /arrayInstanceType:"System.Collections.Generic.List"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /dictionaryBaseType:"System.Collections.Generic.Dictionary"</OpenApiGenerateCodeOptions>
+
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /dateType:"System.DateTime"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /dateTimeType:"System.DateTimeOffset"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /timeType:"System.TimeSpan"</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /timeSpanType:"System.TimeSpan"</OpenApiGenerateCodeOptions>
+
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /generateOptionalParameters:true</OpenApiGenerateCodeOptions>
+    <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /generateJsonMethods:true</OpenApiGenerateCodeOptions>
+  </PropertyGroup>
+
+</Project>
