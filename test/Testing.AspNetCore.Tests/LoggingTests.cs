@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Testing.AspNetCore.Tests.Infrastructure;
 using Xunit;
 using Xunit.Abstractions;
+
+using MS = Microsoft.Extensions.Logging;
 
 namespace Testing.AspNetCore.Tests
 {
@@ -27,6 +27,7 @@ namespace Testing.AspNetCore.Tests
         {
             const string message = "This is a trace message";
             const string category = "Testing.AspNetCore.Controllers.LoggingController";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -34,9 +35,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.Trace);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Trace, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Trace, message);
 
-                tc.VerifyLog(LogLevel.Trace, message, category, count: 1);
+                tc.VerifyLog(MS.LogLevel.Trace, message, category, count: 1);
             }
         }
 
@@ -44,6 +45,7 @@ namespace Testing.AspNetCore.Tests
         public async Task TraceMessageNotLogged()
         {
             const string message = "This is a trace message";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -51,9 +53,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.None);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Trace, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Trace, message);
 
-                tc.VerifyLog(LogLevel.Trace, message, count: 0);
+                tc.VerifyLog(MS.LogLevel.Trace, message, count: 0);
             }
         }
 
@@ -62,6 +64,7 @@ namespace Testing.AspNetCore.Tests
         {
             const string message = "This is a debug message";
             const string category = "Testing.AspNetCore.Controllers.LoggingController";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -69,9 +72,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.Debug);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Debug, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Debug, message);
 
-                tc.VerifyLog(LogLevel.Debug, message, category, count: 1);
+                tc.VerifyLog(MS.LogLevel.Debug, message, category, count: 1);
             }
         }
 
@@ -79,6 +82,7 @@ namespace Testing.AspNetCore.Tests
         public async Task DebugMessageNotLogged()
         {
             const string message = "This is a debug message";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -86,9 +90,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.None);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Debug, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Debug, message);
 
-                tc.VerifyLog(LogLevel.Debug, message, count: 0);
+                tc.VerifyLog(MS.LogLevel.Debug, message, count: 0);
             }
         }
 
@@ -97,6 +101,7 @@ namespace Testing.AspNetCore.Tests
         {
             const string message = "This is a information message";
             const string category = "Testing.AspNetCore.Controllers.LoggingController";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -104,9 +109,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.Information);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Information, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Information, message);
 
-                tc.VerifyLog(LogLevel.Information, message, category, count: 1);
+                tc.VerifyLog(MS.LogLevel.Information, message, category, count: 1);
             }
         }
 
@@ -114,6 +119,7 @@ namespace Testing.AspNetCore.Tests
         public async Task InformationMessageNotLogged()
         {
             const string message = "This is a information message";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -121,9 +127,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.None);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Information, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Information, message);
 
-                tc.VerifyLog(LogLevel.Information, message, count: 0);
+                tc.VerifyLog(MS.LogLevel.Information, message, count: 0);
             }
         }
         
@@ -132,6 +138,7 @@ namespace Testing.AspNetCore.Tests
         {
             const string message = "This is a warning message";
             const string category = "Testing.AspNetCore.Controllers.LoggingController";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -139,9 +146,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.Warning);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Warning, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Warning, message);
 
-                tc.VerifyLog(LogLevel.Warning, message, category, count: 1);
+                tc.VerifyLog(MS.LogLevel.Warning, message, category, count: 1);
             }
         }
 
@@ -149,6 +156,7 @@ namespace Testing.AspNetCore.Tests
         public async Task WarningMessageNotLogged()
         {
             const string message = "This is a warning message";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -156,8 +164,8 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.None);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Warning, message);
-                tc.VerifyLog(LogLevel.Warning, message, count: 0);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Warning, message);
+                tc.VerifyLog(MS.LogLevel.Warning, message, count: 0);
             }
         }
 
@@ -166,6 +174,7 @@ namespace Testing.AspNetCore.Tests
         {
             const string message = "This is a error message";
             const string category = "Testing.AspNetCore.Controllers.LoggingController";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -173,9 +182,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.Error);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Error, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Error, message);
 
-                tc.VerifyLog(LogLevel.Error, message, category, count: 1);
+                tc.VerifyLog(MS.LogLevel.Error, message, category, count: 1);
             }
         }
 
@@ -183,6 +192,7 @@ namespace Testing.AspNetCore.Tests
         public async Task ErrorMessageNotLogged()
         {
             const string message = "This is a error message";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -190,9 +200,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.None);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Error, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Error, message);
 
-                tc.VerifyLog(LogLevel.Error, message, count: 0);
+                tc.VerifyLog(MS.LogLevel.Error, message, count: 0);
             }
         }
 
@@ -201,6 +211,7 @@ namespace Testing.AspNetCore.Tests
         {
             const string message = "This is a critical message";
             const string category = "Testing.AspNetCore.Controllers.LoggingController";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -208,9 +219,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.Critical);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Critical, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Critical, message);
 
-                tc.VerifyLog(LogLevel.Critical, message, category, count: 1);
+                tc.VerifyLog(MS.LogLevel.Critical, message, category, count: 1);
             }
         }
 
@@ -218,6 +229,7 @@ namespace Testing.AspNetCore.Tests
         public async Task CriticalMessageNotLogged()
         {
             const string message = "This is a critical message";
+
             using (var tc = new TestContext(_output))
             {
                 tc.AdditionalConfiguration = (context, builder) =>
@@ -225,9 +237,9 @@ namespace Testing.AspNetCore.Tests
                     SetMinimumLoggingLevel(builder, LogLevel.None);
                 };
 
-                await tc.ApiClient.LogMessageAsync(Level.Critical, message);
+                await tc.ApiClient.LogMessageAsync(LogLevel.Critical, message);
 
-                tc.VerifyLog(LogLevel.Critical, message, count: 0);
+                tc.VerifyLog(MS.LogLevel.Critical, message, count: 0);
             }
         }
 

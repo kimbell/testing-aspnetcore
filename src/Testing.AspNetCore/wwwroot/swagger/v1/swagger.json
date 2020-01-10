@@ -17,17 +17,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "enum": [
-                "trace",
-                "debug",
-                "information",
-                "warning",
-                "error",
-                "critical",
-                "none"
-              ],
-              "type": "string",
-              "default": ""
+              "$ref": "#/components/schemas/LogLevel"
             }
           }
         ],
@@ -56,7 +46,62 @@
           }
         }
       }
+    },
+    "/OverridableService/message": {
+      "get": {
+        "tags": [
+          "OverridableService"
+        ],
+        "operationId": "ProduceMessage",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverridableServiceValue"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverridableServiceValue"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverridableServiceValue"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "components": {}
+  "components": {
+    "schemas": {
+      "LogLevel": {
+        "enum": [
+          "Trace",
+          "Debug",
+          "Information",
+          "Warning",
+          "Error",
+          "Critical",
+          "None"
+        ],
+        "type": "string"
+      },
+      "OverridableServiceValue": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
 }

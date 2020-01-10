@@ -105,7 +105,7 @@ namespace Testing.AspNetCore.Tests.Infrastructure
                 });
         }
 
-        public void VerifyLog(LogLevel logLevel, string message = null, string category = null, int? count = null)
+        public void VerifyLog(Microsoft.Extensions.Logging.LogLevel logLevel, string message = null, string category = null, int? count = null)
         {
             var byLogLevel = _loggerProvider.Entries.Where(l => l.LogLevel == logLevel);
 

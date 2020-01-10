@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -21,33 +20,9 @@ namespace Testing.AspNetCore.Controllers
         [SwaggerOperation(OperationId = "LogMessage")]
         public async Task<IActionResult> LogMessage(LogLevel level, [FromBody] string message)
         {
-            switch (level)
-            {
-                case LogLevel.Trace:
-                    _logger.LogTrace(message);
-                    break;
-                case LogLevel.Debug:
-                    _logger.LogDebug(message);
-                    break;
-                case LogLevel.Information:
-                    _logger.LogInformation(message);
-                    break;
-                case LogLevel.Warning:
-                    _logger.LogWarning(message);
-                    break;
-                case LogLevel.Error:
-                    _logger.LogError(message);
-                    break;
-                case LogLevel.Critical:
-                    _logger.LogCritical(message);
-                    break;
-                case LogLevel.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(level), level, null);
-            }
-
-            await Task.CompletedTask;
+            _logger.Log(level, message);
+            
+            await Task.CompletedTask.ConfigureAwait(false);
             return Ok("It got logged");
         }
     }

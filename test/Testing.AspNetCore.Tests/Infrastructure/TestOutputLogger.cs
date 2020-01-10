@@ -54,12 +54,12 @@ namespace Testing.AspNetCore.Tests.Infrastructure
             return null;
         }
 
-        public bool IsEnabled(LogLevel logLevel)
+        public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel)
         {
             return true;
         }
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
             var formattetMessage = formatter(state, exception);
             _entries.Add(new LogEntry
@@ -68,7 +68,7 @@ namespace Testing.AspNetCore.Tests.Infrastructure
                 LogLevel = logLevel,
                 Message = formattetMessage
             });
-            
+
             // show in xUnit logs
             _output?.WriteLine(formattetMessage);
             if (exception != null)
@@ -81,7 +81,7 @@ namespace Testing.AspNetCore.Tests.Infrastructure
     internal class LogEntry
     {
         public string Category { get; set; }
-        public LogLevel LogLevel { get; set; }
+        public Microsoft.Extensions.Logging.LogLevel LogLevel { get; set; }
         public string Message { get; set; }
     }
 }

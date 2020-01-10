@@ -30,14 +30,15 @@ namespace Testing.AspNetCore.Tests
         [Fact]
         public async Task ReadOriginalValue()
         {
-            using var tc = new TestContext(_output);
+            using (var tc = new TestContext(_output))
+            {
+                var client = tc.HttpClient; // required to initialize things
+                var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
 
-            var client = tc.HttpClient; // required to initialize things
-            var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
+                Assert.Equal("https://petstore.swagger.io/v2", options.Value.Url);
 
-            Assert.Equal("https://petstore.swagger.io/v2", options.Value.Url);
-
-            await Task.CompletedTask;
+                await Task.CompletedTask;
+            }
         }
 
         /// <summary>
@@ -47,23 +48,23 @@ namespace Testing.AspNetCore.Tests
         [Fact]
         public async Task ChangedUsingConfiguration()
         {
-            using var tc = new TestContext(_output)
+            using (var tc = new TestContext(_output))
             {
-                AdditionalConfiguration = (context, configuration) =>
+                tc.AdditionalConfiguration = (context, configuration) =>
                 {
                     configuration.AddInMemoryCollection(new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                     {
                         {"PetStore:Url", "http://storepet"}
                     });
-                }
-            };
+                };
+               
+                var client = tc.HttpClient; // required to initialize things
+                var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
 
-            var client = tc.HttpClient; // required to initialize things
-            var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
+                Assert.Equal("http://storepet", options.Value.Url);
 
-            Assert.Equal("http://storepet", options.Value.Url);
-
-            await Task.CompletedTask;
+                await Task.CompletedTask;
+            }
         }
 
         /// <summary>
@@ -73,20 +74,20 @@ namespace Testing.AspNetCore.Tests
         [Fact]
         public async Task ChangedUsingPostConfigure()
         {
-            using var tc = new TestContext(_output)
+            using (var tc = new TestContext(_output))
             {
-                AdditionalServices = (context, services) =>
+                tc.AdditionalServices = (context, services) =>
                 {
                     services.PostConfigure<PetStoreOptions>(o => { o.Url = "http://petstore"; });
-                }
-            };
-            
-            var client = tc.HttpClient; // required to initialize things
-            var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
+                };            
 
-            Assert.Equal("http://petstore", options.Value.Url);
+                var client = tc.HttpClient; // required to initialize things
+                var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
 
-            await Task.CompletedTask;
+                Assert.Equal("http://petstore", options.Value.Url);
+
+                await Task.CompletedTask;
+            }
         }
     }
 }

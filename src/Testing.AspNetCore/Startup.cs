@@ -1,13 +1,15 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Testing.AspNetCore.PetStore;
+using Testing.AspNetCore.Services;
 
 namespace Testing.AspNetCore
 {
@@ -56,6 +58,9 @@ namespace Testing.AspNetCore
                 c.DescribeAllEnumsAsStrings();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Testing Demo API", Version = "v1" });
             });
+
+            // need to use TryXXXX so that we can replace the implementation in tests
+            services.TryAddSingleton<IOverridableService, OverridableService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,11 +71,7 @@ namespace Testing.AspNetCore
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            //app.UseAuthorization();
 
             app.UseSwagger(options => { options.SerializeAsV2 = false; });
             app.UseSwaggerUI(c =>
