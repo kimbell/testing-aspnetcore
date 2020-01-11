@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RichardSzalay.MockHttp;
+using Testing.AspNetCore.PetStore;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -86,7 +87,16 @@ namespace Testing.AspNetCore.Tests.Infrastructure
                 .UseEnvironment("BuildTest")
                 .UseDefaultServiceProvider(p => p.ValidateScopes = true)
                 .ConfigureServices((context, services) =>
-                {    
+                {
+                    // configure our petstore with a unique host so that we can mock it using different urls than other services we might want to mock
+                    services.PostConfigure<PetStoreOptions>(o =>
+                    {
+                        o.Url = "http://petstore";
+                    });
+
+                    // since we registered with a named client, we can configure it so that we can mock all the requests and responses
+                    services.AddHttpClient(PetStoreOptions.HttpClientName).ConfigurePrimaryHttpMessageHandler(() => PetStoreMockHandler);
+
                     AdditionalServices?.Invoke(context, services);
                 })
                 .ConfigureAppConfiguration((context, configurationBuilder) =>

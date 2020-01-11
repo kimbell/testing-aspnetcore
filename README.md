@@ -17,4 +17,5 @@ The documentation is spread over multiple topics.
 [General principles](docs/Principles.md)  
 [Logging](docs/Logging.md)  
 [Overriable services](docs/OverridableService.md)  
+[Mocking Http service calls](docs/MockHttp.md)  
 

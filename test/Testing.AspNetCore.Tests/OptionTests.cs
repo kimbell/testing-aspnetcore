@@ -33,9 +33,9 @@ namespace Testing.AspNetCore.Tests
             using (var tc = new TestContext(_output))
             {
                 var client = tc.HttpClient; // required to initialize things
-                var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
+                var options = tc.Server.Services.GetRequiredService<IOptions<GenericOption>>();
 
-                Assert.Equal("https://petstore.swagger.io/v2", options.Value.Url);
+                Assert.Equal("From config file", options.Value.Value);
 
                 await Task.CompletedTask;
             }
@@ -54,14 +54,14 @@ namespace Testing.AspNetCore.Tests
                 {
                     configuration.AddInMemoryCollection(new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                     {
-                        {"PetStore:Url", "http://storepet"}
+                        {"Generic:Value", "From configuration provider"}
                     });
                 };
                
                 var client = tc.HttpClient; // required to initialize things
-                var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
+                var options = tc.Server.Services.GetRequiredService<IOptions<GenericOption>>();
 
-                Assert.Equal("http://storepet", options.Value.Url);
+                Assert.Equal("From configuration provider", options.Value.Value);
 
                 await Task.CompletedTask;
             }
@@ -78,13 +78,13 @@ namespace Testing.AspNetCore.Tests
             {
                 tc.AdditionalServices = (context, services) =>
                 {
-                    services.PostConfigure<PetStoreOptions>(o => { o.Url = "http://petstore"; });
+                    services.PostConfigure<GenericOption>(o => { o.Value = "From post configure"; });
                 };            
 
                 var client = tc.HttpClient; // required to initialize things
-                var options = tc.Server.Services.GetRequiredService<IOptions<PetStoreOptions>>();
+                var options = tc.Server.Services.GetRequiredService<IOptions<GenericOption>>();
 
-                Assert.Equal("http://petstore", options.Value.Url);
+                Assert.Equal("From post configure", options.Value.Value);
 
                 await Task.CompletedTask;
             }

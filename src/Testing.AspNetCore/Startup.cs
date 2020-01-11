@@ -59,6 +59,8 @@ namespace Testing.AspNetCore
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Testing Demo API", Version = "v1" });
             });
 
+            services.Configure<GenericOption>(Configuration.GetSection("Generic"));
+
             // need to use TryXXXX so that we can replace the implementation in tests
             services.TryAddSingleton<IOverridableService, OverridableService>();
         }
