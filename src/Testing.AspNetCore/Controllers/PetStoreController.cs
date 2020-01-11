@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 //using Swashbuckle.AspNetCore.Annotations;
 using Testing.AspNetCore.PetStore;
 
@@ -19,11 +17,12 @@ namespace Testing.AspNetCore.Controllers
             _client = client;
         }
 
-        //[HttpGet]
-        //[SwaggerOperation(OperationId = "GetPets")]
-        //public Task<IActionResult> GetPets()
-        //{
-           
-        //}
+        [HttpGet]
+        [SwaggerOperation(OperationId = "GetPets")]
+        public async Task<IActionResult> GetPets()
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            return Ok("some pets");
+        }
     }
 }

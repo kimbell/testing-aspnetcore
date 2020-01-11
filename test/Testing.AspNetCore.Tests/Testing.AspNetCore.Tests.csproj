@@ -18,16 +18,6 @@
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.4.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.4.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-    <!-- Open API Packages-->
-    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.1.6" />    
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.1.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <!-- Mocking libraries-->
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
@@ -54,10 +44,32 @@
 
   <!-- Open API configuration-->
   <ItemGroup>
+    <!-- This is the framework package that enables other libraries to plug into the OpenApi code generation system-->
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <!-- NSWag is one alternative for code generation-->
+    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.1.6" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.1.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!--
+    When consuming OpenApi documents, you have two choices: reference the project or a specific file. 
+    Project reference is usefull when things are under development. It requires some setup in the project and assumes a project is available. 
+    File reference is useful when the contract is stable or when referencing a system outside your control. 
+    -->
+    
+    <!--
     <OpenApiReference Include="..\..\src\Testing.AspNetCore\wwwroot\swagger\v1\swagger.json" CodeGenerator="NSwagCSharp" OutputPath="ApiClient.cs" />
+    -->
+    <OpenApiProjectReference Include="..\..\src\Testing.AspNetCore\Testing.AspNetCore.csproj" CodeGenerator="NSwagCSharp" OutputPath="ApiClient.cs"/>
   </ItemGroup>
 
   <PropertyGroup>
+    <!-- Thes are settings to configure NSWag code generation. Information was derived by looking at the .nswag files use by their tooling. -->
     <OpenApiGenerateCodeOnBuild>true</OpenApiGenerateCodeOnBuild>
     <OpenApiCodeDirectory>External</OpenApiCodeDirectory>
     <OpenApiGenerateCodeOptions>$(OpenApiGenerateCodeOptions) /parameterArrayType:"System.Collections.Generic.List"</OpenApiGenerateCodeOptions>
