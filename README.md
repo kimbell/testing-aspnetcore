@@ -18,4 +18,5 @@ The documentation is spread over multiple topics.
 [Logging](docs/Logging.md)  
 [Overriable services](docs/OverridableService.md)  
 [Mocking Http service calls](docs/MockHttp.md)  
+[Http Headers and Cookies](docs/HttpData.md)
 
