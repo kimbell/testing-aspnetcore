@@ -12,14 +12,14 @@
 
   <ItemGroup>
     <!-- Test platform -->
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.4.0" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.4.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.7.1" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.7.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <!-- Mocking libraries-->
-    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Moq" Version="4.14.6" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
     <!-- Testing framework-->
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -27,7 +27,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -45,13 +45,13 @@
   <!-- Open API configuration-->
   <ItemGroup>
     <!-- This is the framework package that enables other libraries to plug into the OpenApi code generation system-->
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.1.0">
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <!-- NSWag is one alternative for code generation-->
-    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.1.6" />
-    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.1.6">
+    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.8.2" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.8.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -65,7 +65,7 @@
     <!--
     <OpenApiReference Include="..\..\src\Testing.AspNetCore\wwwroot\swagger\v1\swagger.json" CodeGenerator="NSwagCSharp" OutputPath="ApiClient.cs" />
     -->
-    <OpenApiProjectReference Include="..\..\src\Testing.AspNetCore\Testing.AspNetCore.csproj" CodeGenerator="NSwagCSharp" OutputPath="ApiClient.cs"/>
+    <OpenApiProjectReference Include="..\..\src\Testing.AspNetCore\Testing.AspNetCore.csproj" CodeGenerator="NSwagCSharp" OutputPath="ApiClient.cs" />
   </ItemGroup>
 
   <PropertyGroup>
