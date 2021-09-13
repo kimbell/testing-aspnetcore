@@ -55,7 +55,6 @@ namespace Testing.AspNetCore
             services.AddSwaggerGen(c =>
             {
                 c.EnableAnnotations();
-                c.DescribeAllEnumsAsStrings();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Testing Demo API", Version = "v1" });
             });
 
